@@ -1,0 +1,6 @@
+E:\MyWorkspace\Samples\MyDotNetSamples\Yibi\NetSharper\obj\Debug\netcoreapp2.2\NetSharper.csprojAssemblyReference.cache
+E:\MyWorkspace\Samples\MyDotNetSamples\Yibi\NetSharper\obj\Debug\netcoreapp2.2\NetSharper.csproj.CoreCompileInputs.cache
+E:\MyWorkspace\Samples\MyDotNetSamples\Yibi\NetSharper\obj\Debug\netcoreapp2.2\NetSharper.AssemblyInfoInputs.cache
+E:\MyWorkspace\Samples\MyDotNetSamples\Yibi\NetSharper\obj\Debug\netcoreapp2.2\NetSharper.AssemblyInfo.cs
+E:\MyWorkspace\Samples\MyDotNetSamples\Yibi\NetSharper\bin\Debug\netcoreapp2.2\Yibi.NetSharper.deps.json
+E:\MyWorkspace\Samples\MyDotNetSamples\Yibi\NetSharper\bin\Debug\netcoreapp2.2\Yibi.NetSharper.dll
