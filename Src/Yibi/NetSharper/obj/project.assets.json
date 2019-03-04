@@ -719,11 +719,11 @@
   "project": {
     "version": "1.0.1",
     "restore": {
-      "projectUniqueName": "E:\\MyWorkspace\\Samples\\MyDotNetSamples\\Yibi\\NetSharper\\NetSharper.csproj",
+      "projectUniqueName": "E:\\MyWorkspace\\Temp\\Yibi.NetSharper\\Src\\Yibi\\NetSharper\\NetSharper.csproj",
       "projectName": "Yibi.NetSharper",
-      "projectPath": "E:\\MyWorkspace\\Samples\\MyDotNetSamples\\Yibi\\NetSharper\\NetSharper.csproj",
+      "projectPath": "E:\\MyWorkspace\\Temp\\Yibi.NetSharper\\Src\\Yibi\\NetSharper\\NetSharper.csproj",
       "packagesPath": "C:\\Users\\aa\\.nuget\\packages\\",
-      "outputPath": "E:\\MyWorkspace\\Samples\\MyDotNetSamples\\Yibi\\NetSharper\\obj\\",
+      "outputPath": "E:\\MyWorkspace\\Temp\\Yibi.NetSharper\\Src\\Yibi\\NetSharper\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -737,7 +737,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "http://nuget.dev.yunexpress.com/v3/index.json": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

@@ -23,6 +23,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="E:\MyWorkspace\Temp\Yibi.NetSharper\Src\Yibi\NetSharper\bin\Release\netstandard2.0\Yibi.NetSharper.pdb" target="lib\netstandard2.0\Yibi.NetSharper.pdb" />
+    <file src="E:\MyWorkspace\Temp\Yibi.NetSharper\Src\Yibi\NetSharper\bin\Debug\netstandard2.0\Yibi.NetSharper.pdb" target="lib\netstandard2.0\Yibi.NetSharper.pdb" />
   </files>
 </package>
