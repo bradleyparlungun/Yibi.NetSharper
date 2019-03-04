@@ -11,13 +11,13 @@
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageId>Yibi.NetSharper</PackageId>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <Authors>Yibi</Authors>
     <Owners>Yibi</Owners>
     <PackageProjectUrl>https://github.com/qq283335746/Yibi.NetSharper</PackageProjectUrl>
     <RepositoryUrl>https://github.com/qq283335746/Yibi.NetSharper</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>Yibi.NetSharper,.net core,HttpClient</PackageTags>
+    <PackageTags>Yibi.NetSharper,.netcore,HttpClient</PackageTags>
     <Description>
       Yibi.NetSharper使用.net standard2.0创建，旨在利用HttpClient以及System.Net.Http相关实现进行rest api、站点资源（类似爬虫）等请求访问。
       Yibi.NetSharper实现代码参考与借鉴了RestSharp代码的实现。
@@ -25,8 +25,9 @@
       Yibi. NetSharper Implementation Code Reference and Reference.
       Yibi. NetSharper implementations refer to and learn from RestSharp implementations.
     </Description>
-    <Copyright></Copyright>
-    <PackageReleaseNotes>first commit</PackageReleaseNotes>
+    <Language>C#</Language>
+    <Copyright>Yibi</Copyright>
+    <PackageReleaseNotes>add send xml</PackageReleaseNotes>
     <AssemblyVersion>1.1.1.0</AssemblyVersion>
     <FileVersion>1.1.1.0</FileVersion>
   </PropertyGroup>

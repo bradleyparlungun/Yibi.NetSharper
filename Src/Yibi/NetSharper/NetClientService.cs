@@ -10,6 +10,7 @@ namespace Yibi.NetSharper
 {
     public class NetClientService : INetClientService
     {
+        private bool _isDefaultContentType;
         private readonly IHttpService _httpService;
         public NetClientService(IHttpService httpService)
         {
@@ -20,30 +21,29 @@ namespace Yibi.NetSharper
         {
             _isDefaultContentType = netRequest.Parameters.Any(m => m.ParamsOptions == ParameterOptions.HttpContentHeader && m.Name == HttpR.ContentTypeKey && m.Value == HttpR.ContentType);
 
-            var request = new HttpRequestMessage();
-
-            switch (netRequest.Method)
+            using(var request = new HttpRequestMessage())
             {
-                case HttpMethodOptions.Get:
-                    request.Method = HttpMethod.Get;
-                    break;
-                case HttpMethodOptions.Post:
-                    request.Method = HttpMethod.Post;
-                    if (!_isDefaultContentType) _isDefaultContentType = !netRequest.Parameters.Any(m => m.ParamsOptions == ParameterOptions.HttpContentHeader && m.Name == HttpR.ContentTypeKey);
-                    break;
-                default:
-                    request.Method = HttpMethod.Get;
-                    break;
+                switch (netRequest.Method)
+                {
+                    case HttpMethodOptions.Get:
+                        request.Method = HttpMethod.Get;
+                        break;
+                    case HttpMethodOptions.Post:
+                        request.Method = HttpMethod.Post;
+                        if (!_isDefaultContentType) _isDefaultContentType = !netRequest.Parameters.Any(m => m.ParamsOptions == ParameterOptions.HttpContentHeader && m.Name == HttpR.ContentTypeKey);
+                        break;
+                    default:
+                        request.Method = HttpMethod.Get;
+                        break;
+                }
+
+                if (!string.IsNullOrEmpty(netRequest.Resource)) request.RequestUri = new Uri(netRequest.Resource);
+
+                PrepareRequest(netRequest, request);
+
+                return await _httpService.GetResponseAsync(request);
             }
-
-            if (!string.IsNullOrEmpty(netRequest.Resource)) request.RequestUri = new Uri(netRequest.Resource);
-
-            PrepareRequest(netRequest, request);
-
-            return await _httpService.GetResponseAsync(request);
         }
-
-        private bool _isDefaultContentType;
 
         private void PrepareRequest(NetRequest netRequest, HttpRequestMessage request)
         {
@@ -117,19 +117,25 @@ namespace Yibi.NetSharper
 
         private void AppendContent(NetRequest netRequest, HttpRequestMessage request)
         {
-            if (netRequest.Method == HttpMethodOptions.Post)
+            if (netRequest.Method == HttpMethodOptions.Get) return;
+
+            if (netRequest.Method == HttpMethodOptions.Post && _isDefaultContentType)
             {
-                if (_isDefaultContentType)
-                {
-                    var formItems = netRequest.Parameters.Where(m=>m.ParamsOptions == ParameterOptions.FormUrlEncodedContent);
-                    if(formItems != null && formItems.Any()) request.Content = new FormUrlEncodedContent(formItems.ToNvcs());
-                }
+                var formItems = netRequest.Parameters.Where(m => m.ParamsOptions == ParameterOptions.FormUrlEncodedContent);
+                if (formItems != null && formItems.Any()) request.Content = new FormUrlEncodedContent(formItems.ToNvcs());
             }
 
             var items = netRequest.Parameters.Where(m => m.ParamsOptions == ParameterOptions.GetOrPost);
-            if (items == null || !items.Any()) return;
+            if(items != null && items.Any())
+            {
+                request.Content = new ByteArrayContent(items.ToParameterString().AsBytes());
+            }
 
-            request.Content = new ByteArrayContent(items.ToParameterString().AsBytes());
+            items = netRequest.Parameters.Where(m => m.ParamsOptions == ParameterOptions.RequestBody);
+            if (items != null && items.Any())
+            {
+                request.Content = new ByteArrayContent(items.First().Value.AsBytes());
+            }
         }
     }
 }

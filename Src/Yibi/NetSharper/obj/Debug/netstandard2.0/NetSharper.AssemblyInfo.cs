@@ -21,7 +21,7 @@ using System.Reflection;
       Yibi. NetSharper implementations refer to and learn from RestSharp implementations.
     ")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.1.1.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.2")]
 [assembly: System.Reflection.AssemblyProductAttribute("Yibi.NetSharper")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Yibi.NetSharper")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.1.1.0")]

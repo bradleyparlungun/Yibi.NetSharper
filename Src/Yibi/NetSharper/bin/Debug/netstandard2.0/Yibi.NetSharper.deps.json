@@ -7,7 +7,7 @@
   "targets": {
     ".NETStandard,Version=v2.0": {},
     ".NETStandard,Version=v2.0/": {
-      "Yibi.NetSharper/1.0.1": {
+      "Yibi.NetSharper/1.0.2": {
         "dependencies": {
           "Microsoft.Extensions.Http": "2.2.0",
           "NETStandard.Library": "2.0.3",
@@ -180,7 +180,7 @@
     }
   },
   "libraries": {
-    "Yibi.NetSharper/1.0.1": {
+    "Yibi.NetSharper/1.0.2": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

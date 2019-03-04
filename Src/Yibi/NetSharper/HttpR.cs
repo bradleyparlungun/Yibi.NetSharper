@@ -14,6 +14,7 @@ namespace Yibi.NetSharper
 
         public const string ContentTypeKey = "Content-Type";
         public const string ContentType = "application/x-www-form-urlencoded;charset=UTF-8";
+        public const string XmlContentType = "application/xml";
 
         public const string AcceptEncodingKey = "Accept-Encoding";
         public const string AcceptEncoding = "gzip, deflate";
