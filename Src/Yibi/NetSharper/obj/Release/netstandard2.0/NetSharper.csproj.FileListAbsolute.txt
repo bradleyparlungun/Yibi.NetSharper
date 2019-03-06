@@ -14,3 +14,4 @@ E:\MyWorkspace\Temp\Yibi.NetSharper\Src\Yibi\NetSharper\obj\Release\netstandard2
 E:\MyWorkspace\Temp\Yibi.NetSharper\Src\Yibi\NetSharper\obj\Release\netstandard2.0\NetSharper.AssemblyInfo.cs
 E:\MyWorkspace\Temp\Yibi.NetSharper\Src\Yibi\NetSharper\obj\Release\netstandard2.0\Yibi.NetSharper.dll
 E:\MyWorkspace\Temp\Yibi.NetSharper\Src\Yibi\NetSharper\obj\Release\netstandard2.0\Yibi.NetSharper.pdb
+E:\MyWorkspace\Temp\Yibi.NetSharper\Src\Yibi\NetSharper\obj\Release\netstandard2.0\NetSharper.csprojAssemblyReference.cache

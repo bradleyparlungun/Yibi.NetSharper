@@ -10,8 +10,9 @@ namespace Yibi.NetSharper
 {
     public class NetClientService : INetClientService
     {
-        private bool _isDefaultContentType;
         private readonly IHttpService _httpService;
+        private bool _isDefaultContentType;
+
         public NetClientService(IHttpService httpService)
         {
             _httpService = httpService;
@@ -23,18 +24,10 @@ namespace Yibi.NetSharper
 
             using(var request = new HttpRequestMessage())
             {
-                switch (netRequest.Method)
+                request.Method = new HttpMethod(Enum.GetName(typeof(HttpMethodOptions),netRequest.Method));
+                if(request.Method == HttpMethod.Post)
                 {
-                    case HttpMethodOptions.Get:
-                        request.Method = HttpMethod.Get;
-                        break;
-                    case HttpMethodOptions.Post:
-                        request.Method = HttpMethod.Post;
-                        if (!_isDefaultContentType) _isDefaultContentType = !netRequest.Parameters.Any(m => m.ParamsOptions == ParameterOptions.HttpContentHeader && m.Name == HttpR.ContentTypeKey);
-                        break;
-                    default:
-                        request.Method = HttpMethod.Get;
-                        break;
+                    if (!_isDefaultContentType) _isDefaultContentType = !netRequest.Parameters.Any(m => m.ParamsOptions == ParameterOptions.HttpContentHeader && m.Name == HttpR.ContentTypeKey);
                 }
 
                 if (!string.IsNullOrEmpty(netRequest.Resource)) request.RequestUri = new Uri(netRequest.Resource);

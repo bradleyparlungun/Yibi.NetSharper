@@ -24,3 +24,7 @@ E:\MyWorkspace\Temp\Yibi.NetSharper\Src\Yibi\NetSharper.Test\obj\Release\netcore
 E:\MyWorkspace\Temp\Yibi.NetSharper\Src\Yibi\NetSharper.Test\obj\Release\netcoreapp2.2\NetSharper.Test.AssemblyInfo.cs
 E:\MyWorkspace\Temp\Yibi.NetSharper\Src\Yibi\NetSharper.Test\obj\Release\netcoreapp2.2\Yibi.NetSharper.Test.dll
 E:\MyWorkspace\Temp\Yibi.NetSharper\Src\Yibi\NetSharper.Test\obj\Release\netcoreapp2.2\Yibi.NetSharper.Test.pdb
+E:\MyWorkspace\Temp\Yibi.NetSharper\Src\Yibi\NetSharper.Test\bin\Release\netcoreapp2.2\Yibi.NetSharper.dll
+E:\MyWorkspace\Temp\Yibi.NetSharper\Src\Yibi\NetSharper.Test\bin\Release\netcoreapp2.2\Yibi.NetSharper.pdb
+E:\MyWorkspace\Temp\Yibi.NetSharper\Src\Yibi\NetSharper.Test\obj\Release\netcoreapp2.2\NetSharper.Test.csprojAssemblyReference.cache
+E:\MyWorkspace\Temp\Yibi.NetSharper\Src\Yibi\NetSharper.Test\obj\Release\netcoreapp2.2\NetSharper.Test.csproj.CopyComplete

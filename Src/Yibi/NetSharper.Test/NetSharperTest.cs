@@ -1,29 +1,24 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
-using Yibi.NetSharper;
 
 namespace Yibi.NetSharper.Test
 {
     [TestClass]
-    public class NetSharperTest
+    public class NetSharperTest: Startup
     {
         private readonly INetClientService _client;
 
-        public NetSharperTest(INetClientService client)
+        public NetSharperTest()
         {
-            _client = client;
+            _client = ServiceProvider.GetRequiredService<INetClientService>();
         }
 
-        public async Task EurekaRestfulTest()
+        [TestMethod]
+        public async Task RunTest()
         {
             var request = new NetRequest("https://www.baidu.com/");
             var response = await _client.ExecuteAsync(request);
-
-            Console.WriteLine(JsonConvert.SerializeObject(response));
         }
     }
 }

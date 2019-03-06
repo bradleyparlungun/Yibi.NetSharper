@@ -13,7 +13,7 @@
       Yibi. NetSharper Implementation Code Reference and Reference.
       Yibi. NetSharper implementations refer to and learn from RestSharp implementations.</description>
     <releaseNotes>add send xml</releaseNotes>
-    <copyright>Yibi</copyright>
+    <copyright>©Yibi 2019</copyright>
     <tags>Yibi.NetSharper,.netcore,HttpClient</tags>
     <repository type="git" url="https://github.com/qq283335746/Yibi.NetSharper" />
     <dependencies>

@@ -13,7 +13,7 @@ using System.Reflection;
 
 [assembly: System.Reflection.AssemblyCompanyAttribute("Yibi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
-[assembly: System.Reflection.AssemblyCopyrightAttribute("Yibi")]
+[assembly: System.Reflection.AssemblyCopyrightAttribute("©Yibi 2019")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute(@"
       Yibi.NetSharper使用.net standard2.0创建，旨在利用HttpClient以及System.Net.Http相关实现进行rest api、站点资源（类似爬虫）等请求访问。
       Yibi.NetSharper实现代码参考与借鉴了RestSharp代码的实现。
@@ -21,11 +21,11 @@ using System.Reflection;
       Yibi. NetSharper Implementation Code Reference and Reference.
       Yibi. NetSharper implementations refer to and learn from RestSharp implementations.
     ")]
-[assembly: System.Reflection.AssemblyFileVersionAttribute("1.1.1.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.2")]
+[assembly: System.Reflection.AssemblyFileVersionAttribute("1.1.3.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.4")]
 [assembly: System.Reflection.AssemblyProductAttribute("Yibi.NetSharper")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Yibi.NetSharper")]
-[assembly: System.Reflection.AssemblyVersionAttribute("1.1.1.0")]
+[assembly: System.Reflection.AssemblyVersionAttribute("1.1.3.0")]
 
 // 由 MSBuild WriteCodeFragment 类生成。
 
