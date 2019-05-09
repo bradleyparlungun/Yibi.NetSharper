@@ -56,17 +56,17 @@ namespace Yibi.NetSharper.Extensions
             return string.Format("{0} {1} {2} {3} 00:00:00 GMT+0800 (CST)", arr[0].Substring(0, 3), arr[2].Substring(0, 3), arr[1], arr[3]);
         }
 
-        public static string ToParameterString(this IEnumerable<NetParameter> datas)
+        public static string ToParameterString(this IEnumerable<Parameter> datas)
         {
             return string.Join("&", datas.Select(m => m.ToString()));
         }
 
-        public static IEnumerable<KeyValuePair<string, string>> ToNvcs(this IEnumerable<NetParameter> datas)
+        public static IEnumerable<KeyValuePair<string, string>> ToNvcs(this IEnumerable<Parameter> datas)
         {
             var dics = new Dictionary<string, string>();
             foreach (var item in datas)
             {
-                dics.Add(item.Name, item.Value);
+                dics.Add(item.Name, item.Value.ToString());
             }
             return dics;
         }

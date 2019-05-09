@@ -11,7 +11,6 @@ namespace Yibi.NetSharper
     public class NetClientService : INetClientService
     {
         private readonly IHttpService _httpService;
-        private bool _isDefaultContentType;
 
         public NetClientService(IHttpService httpService)
         {
@@ -20,15 +19,9 @@ namespace Yibi.NetSharper
 
         public async Task<NetResponse> ExecuteAsync(NetRequest netRequest)
         {
-            _isDefaultContentType = netRequest.Parameters.Any(m => m.ParamsOptions == ParameterOptions.HttpContentHeader && m.Name == HttpR.ContentTypeKey && m.Value == HttpR.ContentType);
-
             using(var request = new HttpRequestMessage())
             {
                 request.Method = new HttpMethod(Enum.GetName(typeof(HttpMethodOptions),netRequest.Method));
-                if(request.Method == HttpMethod.Post)
-                {
-                    if (!_isDefaultContentType) _isDefaultContentType = !netRequest.Parameters.Any(m => m.ParamsOptions == ParameterOptions.HttpContentHeader && m.Name == HttpR.ContentTypeKey);
-                }
 
                 if (!string.IsNullOrEmpty(netRequest.Resource)) request.RequestUri = new Uri(netRequest.Resource);
 
@@ -42,48 +35,130 @@ namespace Yibi.NetSharper
         {
             if (!netRequest.Parameters.Any()) return;
 
-            AppendContent(netRequest, request);
+            SetContentType(netRequest);
             AppendHeaders(netRequest, request);
+            AppendBody(netRequest, request);
             AppendCookies(netRequest, request);
         }
 
-        private void AppendHeaders(NetRequest netRequest, HttpRequestMessage request)
+        private void AppendHeaders(INetRequest netRequest, HttpRequestMessage request)
         {
-            var headers = netRequest.Parameters.Where(m => m.ParamsOptions == ParameterOptions.HttpHeader || m.ParamsOptions == ParameterOptions.HttpContentHeader);
+            var headers = netRequest.Parameters.Where(m => m.ParamsOptions == ParameterOptions.Headers);
             if (headers == null || !headers.Any()) return;
 
-            foreach (var item in headers)
+            var contentTypeItem = headers.FirstOrDefault(m => !string.IsNullOrEmpty(m.ContentType));
+            if(contentTypeItem != null)
             {
-                switch (item.ParamsOptions)
+                ContentType = contentTypeItem.ContentType;
+            }
+            else
+            {
+                ContentType = string.Empty;
+            }
+
+            foreach(var item in headers)
+            {
+                if (!string.IsNullOrEmpty(item.ContentType)) continue;
+
+                request.Headers.TryAddWithoutValidation(item.Name, item.Value.ToString());
+            }
+
+            #region old
+
+            //request.Headers.TryAddWithoutValidation
+
+            //foreach (var item in headers)
+            //{
+            //    HttpHeaderType
+            //    switch (item.Name)
+            //    {
+            //        case HttpR.AcceptKey:
+            //            request.Headers.Accept.TryParseAdd(item.Value.ToString());
+            //            break;
+            //        case HttpR.AcceptEncodingKey:
+            //            request.Headers.AcceptEncoding.TryParseAdd(item.Value);
+            //            break;
+            //        case HttpR.AcceptLanguageKey:
+            //            request.Headers.AcceptLanguage.TryParseAdd(item.Value);
+            //            break;
+            //        case HttpR.UserAgentKey:
+            //            request.Headers.UserAgent.TryParseAdd(item.Value);
+            //            break;
+            //        case HttpR.RefererKey:
+            //            request.Headers.Referrer = new Uri(item.Value);
+            //            break;
+            //        default:
+            //            request.Headers.TryAddWithoutValidation(item.Name, item.Value);
+            //            break;
+            //    }
+
+            //    if (!string.IsNullOrEmpty(item.ContentType))
+            //    {
+            //        ContentType = item.ContentType;
+            //    }
+            //    else
+            //    {
+            //        request.Headers.
+            //    }
+            //    switch (item.ParamsOptions)
+            //    {
+            //        case ParameterOptions.HttpHeader:
+            //            switch (item.Name)
+            //            {
+            //                case HttpR.AcceptKey:
+            //                    request.Headers.Accept.TryParseAdd(item.Value);
+            //                    break;
+            //                case HttpR.AcceptEncodingKey:
+            //                    request.Headers.AcceptEncoding.TryParseAdd(item.Value);
+            //                    break;
+            //                case HttpR.AcceptLanguageKey:
+            //                    request.Headers.AcceptLanguage.TryParseAdd(item.Value);
+            //                    break;
+            //                case HttpR.UserAgentKey:
+            //                    request.Headers.UserAgent.TryParseAdd(item.Value);
+            //                    break;
+            //                case HttpR.RefererKey:
+            //                    request.Headers.Referrer = new Uri(item.Value);
+            //                    break;
+            //                default:
+            //                    request.Headers.TryAddWithoutValidation(item.Name, item.Value);
+            //                    break;
+            //            }
+            //            break;
+            //        case ParameterOptions.HttpContentHeader:
+            //            request.Content.Headers.TryAddWithoutValidation(item.Name, item.Value);
+            //            break;
+            //        default:
+            //            break;
+            //    }
+            //}
+
+            #endregion
+        }
+
+        private void AppendBody(NetRequest netRequest, HttpRequestMessage request)
+        {
+            if (!HasHttpMethodWithBody(netRequest.Method))
+            {
+                return;
+            }
+
+            if(ContentType == HttpR.ContentType)
+            {
+                var formItems = netRequest.Parameters.Where(m => m.ParamsOptions == ParameterOptions.Body);
+                if (formItems != null && formItems.Any()) request.Content = new FormUrlEncodedContent(formItems.ToNvcs());
+            }
+            else if(ContentType == HttpR.FormDataContentType)
+            {
+                //ÔÝ²»ÊµÏÖ
+            }
+            else
+            {
+                //body raw
+                var bodyItem = netRequest.Parameters.FirstOrDefault(m => m.ParamsOptions == ParameterOptions.Body);
+                if (!string.IsNullOrEmpty(bodyItem?.Value?.ToString()))
                 {
-                    case ParameterOptions.HttpHeader:
-                        switch (item.Name)
-                        {
-                            case HttpR.AcceptKey:
-                                request.Headers.Accept.TryParseAdd(item.Value);
-                                break;
-                            case HttpR.AcceptEncodingKey:
-                                request.Headers.AcceptEncoding.TryParseAdd(item.Value);
-                                break;
-                            case HttpR.AcceptLanguageKey:
-                                request.Headers.AcceptLanguage.TryParseAdd(item.Value);
-                                break;
-                            case HttpR.UserAgentKey:
-                                request.Headers.UserAgent.TryParseAdd(item.Value);
-                                break;
-                            case HttpR.RefererKey:
-                                request.Headers.Referrer = new Uri(item.Value);
-                                break;
-                            default:
-                                request.Headers.TryAddWithoutValidation(item.Name, item.Value);
-                                break;
-                        }
-                        break;
-                    case ParameterOptions.HttpContentHeader:
-                        request.Content.Headers.TryAddWithoutValidation(item.Name, item.Value);
-                        break;
-                    default:
-                        break;
+                    request.Content = new StringContent(bodyItem.Value.ToString());
                 }
             }
         }
@@ -108,27 +183,32 @@ namespace Yibi.NetSharper
             }
         }
 
-        private void AppendContent(NetRequest netRequest, HttpRequestMessage request)
+        private bool HasHttpMethodWithBody(HttpMethodOptions httpMethod)
         {
-            if (netRequest.Method == HttpMethodOptions.Get) return;
+            if (httpMethod == HttpMethodOptions.Get || httpMethod == HttpMethodOptions.Copy || httpMethod == HttpMethodOptions.Head || httpMethod == HttpMethodOptions.Purge || httpMethod == HttpMethodOptions.Unlock)
+                return false;
 
-            if (netRequest.Method == HttpMethodOptions.Post && _isDefaultContentType)
-            {
-                var formItems = netRequest.Parameters.Where(m => m.ParamsOptions == ParameterOptions.FormUrlEncodedContent);
-                if (formItems != null && formItems.Any()) request.Content = new FormUrlEncodedContent(formItems.ToNvcs());
-            }
+            return true;
+        }
 
-            var items = netRequest.Parameters.Where(m => m.ParamsOptions == ParameterOptions.GetOrPost);
-            if(items != null && items.Any())
-            {
-                request.Content = new ByteArrayContent(items.ToParameterString().AsBytes());
-            }
+        private void SetContentType(INetRequest netRequest)
+        {
+            var contentTypeItem = netRequest.Parameters.LastOrDefault(m => m.ParamsOptions == ParameterOptions.Headers && m.Name == HttpR.ContentTypeKey);
+            ContentType = contentTypeItem?.ContentType;
 
-            items = netRequest.Parameters.Where(m => m.ParamsOptions == ParameterOptions.RequestBody);
-            if (items != null && items.Any())
+            if (string.IsNullOrEmpty(ContentType))
             {
-                request.Content = new ByteArrayContent(items.First().Value.AsBytes());
+                if(netRequest.Parameters.Any(m=>m.Name == HttpR.ContentDispositionKey))
+                {
+                    ContentType = HttpR.FormDataContentType;
+                }
+                else
+                {
+                    ContentType = HttpR.ContentType;
+                }
             }
         }
+
+        private string ContentType { get; set; }
     }
 }

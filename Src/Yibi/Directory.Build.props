@@ -1,0 +1,24 @@
+<Project>
+
+  <PropertyGroup>
+    <Authors>Yibi</Authors>
+    <Company>Yibi</Company>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/qq283335746/Yibi.NetSharper</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/qq283335746/Yibi.NetSharper</RepositoryUrl>
+    <Version>1.0.5</Version>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <!-- NuGet dependencies shared across projects -->
+  <PropertyGroup>
+    <MicrosoftAspNetCorePackageVersion>2.2.0</MicrosoftAspNetCorePackageVersion>
+    <MicrosoftEntityFrameworkCorePackageVersion>2.2.2</MicrosoftEntityFrameworkCorePackageVersion>
+    <MicrosoftExtensionsPackageVersion>2.2.0</MicrosoftExtensionsPackageVersion>
+    <NewtonsoftJsonPackageVersion>12.0.1</NewtonsoftJsonPackageVersion>
+  </PropertyGroup>
+
+</Project>

@@ -1,15 +1,18 @@
 using System;
+using System.Collections.Generic;
 using Yibi.NetSharper.Extensions;
 
 namespace Yibi.NetSharper
 {
     public class NetResponse
     {
-        private string _content;
+        public Uri ResponseUri { get; set; }
+
+        public int StatusCode{get;set;}
 
         public bool IsSuccessful { get; set; }
 
-        public Uri ResponseUri { get; set; }
+        public Dictionary<string,IEnumerable<string>> Headers{get;set;}
 
         public string ContentType { get; set; }
 
@@ -22,5 +25,7 @@ namespace Yibi.NetSharper
         public byte[] RawBytes { get; set; }
 
         public string CookieAppend { get; set; }
+
+        private string _content;
     }
 }

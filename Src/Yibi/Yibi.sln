@@ -7,11 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetSharper", "NetSharper\Ne
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetSharper.Test", "NetSharper.Test\NetSharper.Test.csproj", "{E16A5AF7-3D68-498A-9B84-0661BE0860FD}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9C79D3CF-3899-4223-AA6B-BC95BCAC8BBB}"
-	ProjectSection(SolutionItems) = preProject
-		readme.txt = readme.txt
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

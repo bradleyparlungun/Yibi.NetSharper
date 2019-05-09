@@ -12,9 +12,17 @@ namespace Yibi.NetSharper
         public const string AcceptLanguageKey = "Accept-Language";
         public const string AcceptLanguage = "zh-CN,zh;q=0.9";
 
+        public const string AcceptCharsetKey = "Accept-Charset";
+        public const string AcceptCharset = "utf-8";
+
         public const string ContentTypeKey = "Content-Type";
         public const string ContentType = "application/x-www-form-urlencoded;charset=UTF-8";
         public const string XmlContentType = "application/xml";
+        public const string JsonContentType = "application/json";
+        public const string TextContentType = "text/plain";
+        public const string FormDataContentType = "multipart/form-data";
+        public const string ContentDispositionKey = "Content-Disposition";
+        public const string ContentDisposition = "form-data; name=\"{0}\"; filename=\"{1}\"";
 
         public const string AcceptEncodingKey = "Accept-Encoding";
         public const string AcceptEncoding = "gzip, deflate";

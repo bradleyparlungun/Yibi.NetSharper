@@ -8,7 +8,7 @@ using Yibi.NetSharper.Extensions;
 
 namespace Yibi.NetSharper
 {
-    public class HttpService:IHttpService
+    public class HttpService : IHttpService
     {
         private readonly IHttpClientFactory _clientFactory;
 
@@ -23,26 +23,36 @@ namespace Yibi.NetSharper
 
             var response = await SendAsync(request, CancellationToken.None);
 
-            await ParseToNetResponse(netResponse, response);
+            await ProcessResponse(netResponse, response);
 
             return netResponse;
         }
 
         public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            var client = _clientFactory.CreateClient();
+            var client = _clientFactory.CreateClient(HttpClientNames.Default);
             return await client.SendAsync(request, cancellationToken);
         }
 
-        private async Task ParseToNetResponse(NetResponse netResponse, HttpResponseMessage response)
+        private async Task ProcessResponse(NetResponse netResponse, HttpResponseMessage response)
         {
             using (response)
             {
+                netResponse.StatusCode = (int)response.StatusCode;
                 netResponse.IsSuccessful = response.IsSuccessStatusCode;
                 netResponse.ContentEncoding = string.Join(",", response.Content.Headers.ContentEncoding);
                 netResponse.ContentType = response.Content.Headers.ContentType?.MediaType;
                 netResponse.ContentLength = response.Content.Headers.ContentLength;
                 netResponse.ResponseUri = response.RequestMessage.RequestUri;
+
+                var headers = Enumerable.ToDictionary(response.Headers, h => h.Key, h => h.Value);
+                if (response.Content != null && response.Content.Headers != null)
+                {
+                    foreach (var item in response.Content.Headers)
+                        headers[item.Key] = item.Value;
+                }
+                netResponse.Headers = headers;
+
                 var cookies = response.Headers?.Where(m => m.Key.ToLower() == "set-cookie");
                 if (cookies != null && cookies.Any())
                 {

@@ -4,22 +4,17 @@ using Yibi.NetSharper.Enums;
 
 namespace Yibi.NetSharper
 {
-    public class NetRequest
+    public class NetRequest : INetRequest
     {
         public NetRequest()
         {
             Method = HttpMethodOptions.Get;
-            Parameters = new List<NetParameter>();
+            Parameters = new List<Parameter>();
         }
 
-        public NetRequest(HttpMethodOptions method) : this()
-        {
-            Method = method;
-        }
+        public NetRequest(HttpMethodOptions method) : this() => Method = method;
 
-        public NetRequest(string resource) : this(resource, HttpMethodOptions.Get)
-        {
-        }
+        public NetRequest(string resource) : this(resource, HttpMethodOptions.Get) { }
 
         public NetRequest(string resource, HttpMethodOptions method) : this()
         {
@@ -27,56 +22,58 @@ namespace Yibi.NetSharper
             Method = method;
         }
 
-        public NetRequest(Uri resource) : this(resource, HttpMethodOptions.Get)
-        {
-        }
+        public NetRequest(Uri resource) : this(resource, HttpMethodOptions.Get) { }
 
-        public NetRequest(Uri resource, HttpMethodOptions method): this(resource.IsAbsoluteUri? resource.AbsolutePath + resource.Query: resource.OriginalString, method)
-        {
-        }
+        public NetRequest(Uri resource, HttpMethodOptions method) : this(resource.IsAbsoluteUri ? resource.AbsolutePath + resource.Query : resource.OriginalString, method) { }
 
         public HttpMethodOptions Method { get; set; }
 
         public string Resource { get; set; }
 
-        public List<NetParameter> Parameters { get; }
+        public ICollection<Parameter> Parameters { get; }
 
-        public NetRequest AddParameter(NetParameter p)
+        public INetRequest AddHeader(string name, string value) => AddParameter(name, value, ParameterOptions.Headers);
+
+        public INetRequest AddCookie(string name, string value) => AddParameter(name, value, ParameterOptions.Cookie);
+
+        public INetRequest AddBody(string body)
         {
-            Parameters.Add(p);
+            AddHeader(HttpR.ContentTypeKey, HttpR.TextContentType);
+            AddParameter(new Parameter("", body, ParameterOptions.Body));
 
             return this;
         }
 
-        public NetRequest AddParameter(string name, string value)
+        public INetRequest AddBody(string body, DataFormatOptions dataFormat)
         {
-            return AddParameter(new NetParameter
+            switch (dataFormat)
             {
-                Name = name,
-                Value = value,
-                ParamsOptions = ParameterOptions.GetOrPost
-            });
+                case DataFormatOptions.Json:
+                    AddHeader(HttpR.ContentTypeKey, HttpR.JsonContentType);
+                    AddParameter(new Parameter("", body, ParameterOptions.Body));
+                    break;
+                case DataFormatOptions.Xml:
+                    AddHeader(HttpR.ContentTypeKey, HttpR.XmlContentType);
+                    AddParameter(new Parameter("", body, ParameterOptions.Body));
+                    break;
+                default:
+                    return AddBody(body);
+            }
+
+            return this;
         }
 
-        public NetRequest AddParameter(string name, string value, ParameterOptions type)
-        {
-            return AddParameter(new NetParameter
-            {
-                Name = name,
-                Value = value,
-                ParamsOptions = type
-            });
-        }
+        public INetRequest AddParameter(string name, object value) => AddParameter(new Parameter(name, value, ParameterOptions.None));
 
-        public NetRequest AddParameter(string name, string value, string contentType, ParameterOptions type)
+        public INetRequest AddParameter(string name, object value, ParameterOptions type) => AddParameter(new Parameter(name, value, type));
+
+        public INetRequest AddParameter(string name, object value, string contentType, ParameterOptions type) => AddParameter(new Parameter(name, value, contentType, type));
+
+        public INetRequest AddParameter(Parameter p)
         {
-            return AddParameter(new NetParameter
-            {
-                Name = name,
-                Value = value,
-                ContentType = contentType,
-                ParamsOptions = type
-            });
+            Parameters.Add(p);
+
+            return this;
         }
     }
 }

@@ -4,12 +4,20 @@ namespace Yibi.NetSharper.Enums
 {
     public enum HttpMethodOptions
     {
-        Delete,
         Get,
-        Head,
-        Options,
         Post,
         Put,
-        Trace
+        Patch,
+        Delete,
+        Copy,
+        Head,
+        Options,
+        Link,
+        Unlink,
+        Purge,
+        Lock,
+        Unlock,
+        propfind,
+        View
     }
 }

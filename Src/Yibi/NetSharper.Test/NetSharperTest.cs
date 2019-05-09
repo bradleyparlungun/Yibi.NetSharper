@@ -17,7 +17,7 @@ namespace Yibi.NetSharper.Test
         [TestMethod]
         public async Task RunTest()
         {
-            var request = new NetRequest("https://www.baidu.com/");
+            var request = new NetRequest("https://qq283335746.github.io/Home.html?r=20195001");
             var response = await _client.ExecuteAsync(request);
         }
     }
