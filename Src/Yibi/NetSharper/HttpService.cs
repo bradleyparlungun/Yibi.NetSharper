@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO.Compression;
 using System.Net.Http;
 using Yibi.NetSharper.Extensions;
+using System.Net;
 
 namespace Yibi.NetSharper
 {
@@ -21,7 +22,7 @@ namespace Yibi.NetSharper
         {
             using(var response = await SendAsync(request, default))
             {
-                response.EnsureSuccessStatusCode();
+                if (!response.IsSuccessStatusCode) return default;
 
                 return await response.Content.ReadAsAsync<T>();
             }
