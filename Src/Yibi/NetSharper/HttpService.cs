@@ -17,6 +17,16 @@ namespace Yibi.NetSharper
             _clientFactory = clientFactory;
         }
 
+        public async Task<T> GetResponseAsync<T>(HttpRequestMessage request)
+        {
+            using(var response = await SendAsync(request, default))
+            {
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsAsync<T>();
+            }
+        }
+
         public async Task<NetResponse> GetResponseAsync(HttpRequestMessage request)
         {
             var netResponse = new NetResponse();
